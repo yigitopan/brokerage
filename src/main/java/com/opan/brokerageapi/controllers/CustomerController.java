@@ -26,7 +26,7 @@ public class CustomerController {
 
 
     @PostMapping("/{customerId}/deposit")
-    @PreAuthorize("#customerId == principal.id")
+    @PreAuthorize("(hasRole('CUSTOMER') and #customerId == principal.id) or hasRole('ADMIN')")
     public ResponseEntity< ApiResponse <String> > depositMoney(
             @PathVariable Long customerId,
             @RequestBody DepositRequestDto depositRequest) {
@@ -35,7 +35,7 @@ public class CustomerController {
     }
 
     @PostMapping("/{customerId}/withdraw")
-    @PreAuthorize("#customerId == principal.id")
+    @PreAuthorize("(hasRole('CUSTOMER') and #customerId == principal.id) or hasRole('ADMIN')")
     public ResponseEntity < ApiResponse <String> > withdrawMoney(
             @PathVariable Long customerId,
             @RequestBody WithdrawRequestDto withdrawRequest) {
