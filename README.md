@@ -54,8 +54,7 @@ The matching process executes as follows:
 
 This mechanism ensures:
 
-- Fair price execution
-- Optimal matching of orders
+- Optimal and realistic matching of orders
 - Partial order fulfillment
 
 ## Future Improvements
@@ -69,10 +68,7 @@ Currently, the system includes CustomerIntegrationTest as an example implementat
 
 ### Documentation Enhancements
 
-While a Postman collection provides API documentation, implementing Swagger would offer additional benefits:
-- Interactive API documentation
-- Built-in API testing capabilities
-- Automated client SDK generation
+While a Postman collection provides API documentation, implementing Swagger would offer additional benefits.
 
 ### Alternative Design Considerations
 
