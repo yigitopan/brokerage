@@ -36,7 +36,7 @@ Complete API documentation and examples can be found in our Postman collection:
 
 ## Order Matching Algorithm
 
-The system implements an intelligent order matching algorithm that optimizes price execution for users. Here's a detailed example of how the matching works:
+The system implements an order matching algorithm that optimizes price execution for users. Here's a detailed example of how the matching works:
 
 When User A creates a sell order for 10 DCoin at 50 TRY per coin, the order enters the system as PENDING. Later, when User B places a buy order for 6 DCoin at 52 TRY, the system identifies a matching opportunity.
 
