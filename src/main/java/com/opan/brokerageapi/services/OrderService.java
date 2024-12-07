@@ -42,7 +42,6 @@ public class OrderService {
             if (customer.getBalanceTRY() < totalCost.intValue()) {
                 throw new IllegalArgumentException("Insufficient TRY balance for BUY order");
             }
-            customer.setBalanceTRY(customer.getBalanceTRY() - totalCost.intValue());
         } else if (side == OrderSide.SELL) {
             // Ensure the customer has enough usable asset size
             Asset asset = assetRepository.findByCustomerAndAssetNameContainingIgnoreCase(customer, assetName)
@@ -99,13 +98,18 @@ public class OrderService {
                 newOrder.setSize(newOrder.getSize() - matchSize);
                 sellOrder.setSize(sellOrder.getSize() - matchSize);
 
+                // Update Seller's balance
+                Customer seller = sellOrder.getCustomer();
+                BigDecimal totalPrice = sellOrder.getPrice().multiply(new BigDecimal(matchSize));
+                seller.setBalanceTRY(seller.getBalanceTRY() + totalPrice.intValue());
+                customerRepository.save(seller);
+
+                Customer buyer = newOrder.getCustomer();  
+                buyer.setBalanceTRY(buyer.getBalanceTRY() - totalPrice.intValue());
+                customerRepository.save(buyer);
+
                 if (sellOrder.getSize() == 0) {
                     sellOrder.setStatus(OrderStatus.MATCHED);
-                    // Update Seller's balance
-                    Customer seller = sellOrder.getCustomer();
-                    BigDecimal totalPrice = sellOrder.getPrice().multiply(new BigDecimal(matchSize));
-                    seller.setBalanceTRY(seller.getBalanceTRY() + totalPrice.intValue());
-                    customerRepository.save(seller);
                 }
 
                 if (newOrder.getSize() == 0) {
